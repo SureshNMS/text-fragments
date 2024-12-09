@@ -36,15 +36,26 @@ if (fragment.includes('#:~:text=')) {
 
   });
 */ 
+// Text Fragment Scroll
 if (document.fragmentDirective) {
+   const textFragmentScroll = () => {
+       window.scrollTo(0, window.scrollY);  // Keeps the same scroll position
+       console.log("Page moved");
+   };
 
-   document.addEventListener("scroll", () => {
-      console.log("there is scroll");
-      window.scrollTo(0, window.scrollY);
+   // Scroll listener to maintain scroll position
+   window.addEventListener("scroll", textFragmentScroll, true);
+
+   // Resize listener for resizing behavior
+   window.addEventListener("resize", () => {
+       const overflowContainer = document.querySelector(".main-container");
+       if (overflowContainer) {
+           overflowContainer.style.overflow = "hidden";  // Prevent overflow after resize
+       }
+       textFragmentScroll();
+       console.log("Resize working");
    }, true);
 
-   window.addEventListener("resize", () => { 
-      document.body.querySelector(".main-container").style.overflow="hidden";
-      console.log("resize EL is active an working to prevent scrollbar");
-   });
+   textFragmentScroll();  // Initial scroll position reset
 }
+
